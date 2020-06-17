@@ -3,7 +3,6 @@ import settings
 import sys
 import spotipy.util as util
 
-
 def get_token():
     scope = os.getenv('SCOPE')
     username = os.getenv('USERNAME')
