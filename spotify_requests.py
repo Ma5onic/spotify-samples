@@ -7,17 +7,33 @@ def get_currently_playing(token):
     if token:
         sp = spotipy.Spotify(auth=token)
         result = sp.currently_playing()
+        # TODO
+        # Exception for when not playing anything
         artists = []
-        for artist in result['item']['artists']:
+        for artist in result.get('item').get('artists'):
             artists.append(artist['name'])
         res = {
             'artists': artists,
             'name': result['item']['name']
         }
-        return json.dumps(res)
+        return res
     else:
         print("No token provided")
 
+def get_recently_played_tracks(token):
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        results = sp.current_user_recently_played()
+        res = []
+        for track in results.get('items'):
+            track_name = track.get('track').get('name')
+            res.append({
+                'artists': [artist.get("name") for artist in track.get('track').get('artists')],
+                'name': track_name
+            })
+        return res
+    else:
+        print("No token provided")
 
 def get_saved_tracks(token):
     if token:
