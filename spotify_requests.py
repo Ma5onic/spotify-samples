@@ -2,6 +2,18 @@ import spotipy
 import json
 
 
+def find_track_by_name(token, artist, track):
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        track_url = sp.search(q='artist:' + artist +
+                              ' track:' + track, type='track')
+        track_url = json.dumps(track_url.get('tracks').get(
+            'items')[0].get('external_urls').get('spotify'))
+        return track_url
+    else:
+        print("No token provided")
+
+
 def get_currently_playing(token):
 
     if token:
@@ -20,6 +32,7 @@ def get_currently_playing(token):
     else:
         print("No token provided")
 
+
 def get_recently_played_tracks(token):
     if token:
         sp = spotipy.Spotify(auth=token)
@@ -34,6 +47,7 @@ def get_recently_played_tracks(token):
         return res
     else:
         print("No token provided")
+
 
 def get_saved_tracks(token):
     if token:
