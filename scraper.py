@@ -7,6 +7,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def search_for_track(res):
     # res = json.loads(res)
 
@@ -18,9 +19,10 @@ def search_for_track(res):
     logger.info(f'Constructed a URL: {URL}')
     return URL
 
-def return_samples(URL):
 
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"}
+def return_samples(URL):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.119 Safari/537.36"}
 
     try:
         logger.info(f'Trying to access the URL {URL}')
