@@ -5,25 +5,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-def find_track_by_name(token, artist, track):
-    if token:
-        sp = spotipy.Spotify(auth=token)
-        track_url = sp.search(q='artist:' + artist +
-                              ' track:' + track, type='track')
-        logger.info(f'Searching for {artist} - {track}')
-        try:
-            track_url = json.dumps(track_url.get('tracks').get(
-                'items')[0].get('external_urls').get('spotify')).replace("\"","")
-        except:
-            return None
-        else:
-            return track_url
-    else:
-        print("No token provided")
-
-
 def get_currently_playing(token):
-
     if token:
         sp = spotipy.Spotify(auth=token)
         result = sp.currently_playing()
@@ -38,6 +20,22 @@ def get_currently_playing(token):
             'name': result['item']['name']
         }
         return res
+    else:
+        logger.info("No token provided")
+
+def find_track_by_name(token, artist, track):
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        track_url = sp.search(q='artist:' + artist +
+                              ' track:' + track, type='track')
+        logger.info(f'Searching for {artist} - {track}')
+        try:
+            track_url = json.dumps(track_url.get('tracks').get(
+                'items')[0].get('external_urls').get('spotify')).replace("\"","")
+        except:
+            return None
+        else:
+            return track_url
     else:
         print("No token provided")
 

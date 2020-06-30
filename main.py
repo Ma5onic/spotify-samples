@@ -8,7 +8,6 @@ import time
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-
 def get_samples(tracks_dict, token):
 
     URL = scraper.search_for_track(tracks_dict)
@@ -35,10 +34,11 @@ def get_samples_from_currently_playing(token):
                 'samples': get_samples(current_song, token)
             }
             final_dict = json.dumps(final_dict, indent=4)
-            logger.info(final_dict)
+            return(final_dict)
         else:
             current_song = spotify_requests.get_currently_playing(token)
             time.sleep(1)
+    return(final_dict)
 
 def get_samples_from_recently_played(token):
     recently_played_dict = spotify_requests.get_recently_played_tracks(token)
@@ -59,8 +59,8 @@ def main():
     # tracks_dict = spotify_requests.get_recently_played_tracks(token)
     # tracks_dict = [{'artists': ['J. Cole', 'Kendrick Lamar'],
     #                 'name': 'Forbidden Fruit (feat. Kendrick Lamar)'}]
-
     # get_samples_from_currently_playing(token)
+
     get_samples_from_recently_played(token)
 
 if __name__ == "__main__":
