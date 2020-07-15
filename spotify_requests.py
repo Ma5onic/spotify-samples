@@ -1,27 +1,32 @@
 import spotipy
 import json
-import logging 
+import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def get_currently_playing(token):
     if token:
-        sp = spotipy.Spotify(auth=token)
-        result = sp.currently_playing()
-        # TODO
-        # Exception for when not playing anything
-        artists = []
-        # res = []
-        for artist in result.get('item').get('artists'):
-            artists.append(artist['name'])
-        res = {
-            'artists': artists,
-            'name': result['item']['name']
-        }
-        return res
+        try:
+            sp = spotipy.Spotify(auth=token)
+            result = sp.currently_playing()
+            # TODO
+            # Exception for when not playing anything
+            artists = []
+            # res = []
+            for artist in result.get('item').get('artists'):
+                artists.append(artist['name'])
+            res = {
+                'artists': artists,
+                'name': result['item']['name']
+            }
+            return res
+        except:
+            return None
     else:
         logger.info("No token provided")
+
 
 def find_track_by_name(token, artist, track):
     if token:
@@ -31,7 +36,7 @@ def find_track_by_name(token, artist, track):
         logger.info(f'Searching for {artist} - {track}')
         try:
             track_url = json.dumps(track_url.get('tracks').get(
-                'items')[0].get('external_urls').get('spotify')).replace("\"","")
+                'items')[0].get('external_urls').get('spotify')).replace("\"", "")
         except:
             return None
         else:
