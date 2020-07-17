@@ -48,7 +48,7 @@ def find_track_by_name(token, artist, track):
 def get_recently_played_tracks(token):
     if token:
         sp = spotipy.Spotify(auth=token)
-        results = sp.current_user_recently_played()
+        results = sp.current_user_recently_played(limit=5)
         res = []
         for track in results.get('items'):
             track_name = track.get('track').get('name')
