@@ -3,10 +3,9 @@
 .cache*
 venv
 *idea*
-.cache*
+*cache*
 *workspace
 .vscode
 node_modules
 package*.json
 .serverless
-__pycache__

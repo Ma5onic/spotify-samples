@@ -11,10 +11,7 @@ def get_currently_playing(token):
         try:
             sp = spotipy.Spotify(auth=token)
             result = sp.currently_playing()
-            # TODO
-            # Exception for when not playing anything
             artists = []
-            # res = []
             for artist in result.get('item').get('artists'):
                 artists.append(artist['name'])
             res = {
@@ -23,7 +20,10 @@ def get_currently_playing(token):
             }
             return res
         except:
-            return None
+            return {
+                'artists': None,
+                'name': None
+            }
     else:
         logger.info("No token provided")
 
@@ -42,7 +42,7 @@ def find_track_by_name(token, artist, track):
         else:
             return track_url
     else:
-        print("No token provided")
+        logger.info("No token provided")
 
 
 def get_recently_played_tracks(token):
@@ -58,7 +58,7 @@ def get_recently_played_tracks(token):
             })
         return res
     else:
-        print("No token provided")
+        logger.info("No token provided")
 
 
 def get_saved_tracks(token):
@@ -67,9 +67,25 @@ def get_saved_tracks(token):
         results = sp.current_user_saved_tracks()
         for item in results['items']:
             track = item['track']
-            print(track['name'] + ' - ' + track['artists'][0]['name'])
+            logger.info(track['name'] + ' - ' + track['artists'][0]['name'])
     else:
-        print("No token provided")
+        logger.info("No token provided")
+
+
+def get_playlist_tracks(username, playlist_id, token):
+    if token:
+        sp = spotipy.Spotify(auth=token)
+        results = sp.user_playlist_tracks(username, playlist_id)
+        res = []
+        for track in results.get('items'):
+            track_name = track.get('track').get('name')
+            res.append({
+                'artists': [artist.get("name") for artist in track.get('track').get('artists')],
+                'name': track_name
+            })
+        return res
+    else:
+        logger.info("No token provided")
 
 
 def get_at_favorite(token):
@@ -84,4 +100,4 @@ def get_at_favorite(token):
             })
         return res
     else:
-        print("No token provided")
+        logger.info("No token provided")

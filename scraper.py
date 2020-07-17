@@ -34,14 +34,15 @@ def search_for_track(query):
             # while https://www.whosampled.com/Masta-Ace/Reminds-Me/ is valid and returns proper page
 
             track_name = query.get('name').rstrip()
-            
+
             # track_name = query.get('name').split('(')[0].rstrip()
             # Removing text in brackets might be useful
 
             # TODO
             # Remove '- Remastered xxxx' from track names if present
 
-            transl_table = dict( [ (ord(x), ord(y)) for x,y in zip( u"‘’´“”–- ",  u"'''\"\"---") ] ) 
+            transl_table = dict([(ord(x), ord(y))
+                                 for x, y in zip(u"‘’´“”–- ",  u"'''\"\"---")])
 
             URL = f'https://www.whosampled.com/{urllib.parse.quote(artist.translate(transl_table))}/{urllib.parse.quote(track_name.translate(transl_table))}/'
             URLs.append(URL)
@@ -72,7 +73,7 @@ def find_samples(URLs):
                 logger.info(
                     'URL is invalid or samples section was not found on the page')
             else:
-                # TODO 
+                # TODO
                 # Check for Multiple Elements tag on the page
                 sample_entries = section.find_all(
                     'div', class_="listEntry sampleEntry")
@@ -89,4 +90,7 @@ def find_samples(URLs):
                         'track_artist': re.sub(r'^by ', '', track_artist).split('(')[0].rstrip()
                     })
                 results = json.dumps(results, indent=4)
-                return results
+                return {
+                    'results': results,
+                    'URL': URL
+                }
