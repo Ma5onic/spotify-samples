@@ -5,12 +5,14 @@ import scraper
 import json
 import logging
 import os
+from flask_cors import CORS
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-
+CORS(app)
 token = authorize.get_token()
 
 
@@ -47,7 +49,6 @@ def get_samples_from_currently_playing(token):
             'whosampled_url': samples.get('whosampled_url'),
             'samples': samples.get('samples'),
         }
-        final_dict = final_dict
         return(final_dict)
     else:
         return None

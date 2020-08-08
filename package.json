@@ -1,0 +1,20 @@
+{
+  "name": "spotify-samples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-wsgi": "^1.7.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git-codecommit.eu-central-1.amazonaws.com/v1/repos/spotify-samples"
+  },
+  "author": "Artem Potemkin <artemvpotemkin@gmail.com>",
+  "license": "ISC"
+}
